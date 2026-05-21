@@ -1,0 +1,9 @@
+.git
+.idea
+*.iml
+target
+**/target
+*.zip
+*.log
+*.err.log
+__pycache__
