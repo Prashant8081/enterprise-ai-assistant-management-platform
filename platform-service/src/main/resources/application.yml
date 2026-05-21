@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: ${PORT:8081}
 
 spring:
   application:
@@ -37,6 +37,7 @@ app:
     admin-email: ${BOOTSTRAP_ADMIN_EMAIL:admin@enterprise.local}
     admin-password: ${BOOTSTRAP_ADMIN_PASSWORD:Admin@12345}
   kafka:
+    enabled: ${KAFKA_ENABLED:true}
     audit-topic: ${AUDIT_TOPIC:assistant.audit.events}
 
 management:

@@ -13,14 +13,21 @@ public class AuditEventPublisher {
 
     private final KafkaTemplate<String, AuditEvent> kafkaTemplate;
     private final String topic;
+    private final boolean enabled;
 
     public AuditEventPublisher(KafkaTemplate<String, AuditEvent> kafkaTemplate,
-                               @Value("${app.kafka.audit-topic}") String topic) {
+                               @Value("${app.kafka.audit-topic}") String topic,
+                               @Value("${app.kafka.enabled:true}") boolean enabled) {
         this.kafkaTemplate = kafkaTemplate;
         this.topic = topic;
+        this.enabled = enabled;
     }
 
     public void publish(AuditEvent event) {
+        if (!enabled) {
+            log.debug("Kafka audit publishing is disabled. auditId={}", event.auditId());
+            return;
+        }
         kafkaTemplate.send(topic, event.auditId().toString(), event)
             .whenComplete((result, ex) -> {
                 if (ex != null) {
