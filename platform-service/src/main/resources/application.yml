@@ -4,6 +4,9 @@ server:
 spring:
   application:
     name: platform-service
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
   datasource:
     url: ${DB_URL:jdbc:postgresql://localhost:5432/enterprise_ai}
     username: ${DB_USERNAME:enterprise_ai}
@@ -49,7 +52,6 @@ management:
     health:
       probes:
         enabled: true
-
 
 springdoc:
   api-docs:
